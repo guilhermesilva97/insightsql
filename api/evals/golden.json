@@ -1,0 +1,42 @@
+[
+  {
+    "id": "pedidos-cancelados",
+    "question": "Quantos pedidos foram cancelados?",
+    "expected_sql": "SELECT COUNT(*) FROM orders WHERE status = 'cancelled'"
+  },
+  {
+    "id": "clientes-por-estado",
+    "question": "Quantos clientes temos em cada estado?",
+    "expected_sql": "SELECT state, COUNT(*) FROM customers GROUP BY state"
+  },
+  {
+    "id": "receita-por-categoria",
+    "question": "Qual a receita total por categoria, sem contar pedidos cancelados?",
+    "expected_sql": "SELECT c.name, SUM(oi.quantity * oi.unit_price) FROM order_items oi JOIN orders o ON o.id = oi.order_id JOIN products p ON p.id = oi.product_id JOIN categories c ON c.id = p.category_id WHERE o.status <> 'cancelled' GROUP BY c.name"
+  },
+  {
+    "id": "top-produtos-receita",
+    "question": "Quais são os 5 produtos com maior receita, considerando todos os pedidos?",
+    "expected_sql": "SELECT p.name, SUM(oi.quantity * oi.unit_price) AS revenue FROM order_items oi JOIN products p ON p.id = oi.product_id GROUP BY p.name ORDER BY revenue DESC LIMIT 5"
+  },
+  {
+    "id": "pedidos-por-status",
+    "question": "Quantos pedidos existem em cada status?",
+    "expected_sql": "SELECT status, COUNT(*) FROM orders GROUP BY status"
+  },
+  {
+    "id": "receita-2024",
+    "question": "Qual foi a receita total de 2024, desconsiderando pedidos cancelados?",
+    "expected_sql": "SELECT SUM(oi.quantity * oi.unit_price) FROM order_items oi JOIN orders o ON o.id = oi.order_id WHERE o.status <> 'cancelled' AND o.ordered_at >= '2024-01-01' AND o.ordered_at < '2025-01-01'"
+  },
+  {
+    "id": "pedidos-por-mes-2025",
+    "question": "Quantos pedidos foram feitos por mês em 2025?",
+    "expected_sql": "SELECT date_trunc('month', ordered_at), COUNT(*) FROM orders WHERE ordered_at >= '2025-01-01' AND ordered_at < '2026-01-01' GROUP BY 1"
+  },
+  {
+    "id": "clientes-sem-pedido",
+    "question": "Quantos clientes nunca fizeram nenhum pedido?",
+    "expected_sql": "SELECT COUNT(*) FROM customers c WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id)"
+  }
+]

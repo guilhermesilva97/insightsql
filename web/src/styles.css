@@ -1,0 +1,275 @@
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --text: #1b1f24;
+  --muted: #5d6673;
+  --border: #e1e4e8;
+  --accent: #2f6fde;
+  --accent-text: #ffffff;
+  --danger: #c4314b;
+  --success: #1f8a52;
+  --series-1: #2f6fde;
+  --series-2: #e07a1f;
+  --series-3: #1f8a52;
+  --series-4: #9b4dca;
+  --radius: 10px;
+  color-scheme: light dark;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1216;
+    --surface: #171b21;
+    --text: #e6e9ee;
+    --muted: #9aa3af;
+    --border: #2a3039;
+    --accent: #5b8ff0;
+    --danger: #ef6b82;
+    --success: #4cc38a;
+    --series-1: #5b8ff0;
+    --series-2: #f3a35c;
+    --series-3: #4cc38a;
+    --series-4: #c08bf0;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.muted {
+  color: var(--muted);
+  margin: 4px 0 0;
+}
+
+.question {
+  margin: 24px 0;
+}
+
+.question__form {
+  display: flex;
+  gap: 8px;
+}
+
+.question__input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.button {
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.question__suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.chip {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.chip:disabled {
+  opacity: 0.55;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.card__title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.trace__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.trace__step {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.trace__step:last-child {
+  border-bottom: 0;
+}
+
+.trace__dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.trace__step--ok .trace__dot {
+  background: var(--success);
+}
+
+.trace__step--failed .trace__dot {
+  background: var(--danger);
+}
+
+.trace__step--running .trace__dot {
+  background: var(--accent);
+  animation: pulse 1s infinite alternate;
+}
+
+.trace__step--thinking {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.trace__arg {
+  margin-left: 6px;
+  font-size: 0.8rem;
+}
+
+.trace__summary {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.results {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.alert {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.answer__summary {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.chart {
+  margin-bottom: 16px;
+}
+
+.answer__sql {
+  margin-bottom: 16px;
+}
+
+.answer__sql summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.answer__sql pre {
+  overflow-x: auto;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: var(--bg);
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table th,
+.table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 800px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .question__form {
+    flex-direction: column;
+  }
+
+  .button {
+    padding: 12px;
+  }
+}
